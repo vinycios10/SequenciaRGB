@@ -15,22 +15,22 @@ int64_t turn_off_callback(alarm_id_t id, void *user_data) {
     switch (led_atual)
     {
     case 1:
-        gpio_put(led_pin_red, false);
-        gpio_put(led_pin_blue, true);
+        gpio_put(led_pin_blue, false);
+        gpio_put(led_pin_red, true);
         gpio_put(led_pin_green, true);
         led_atual++;
         add_alarm_in_ms(3000, turn_off_callback, NULL, false);
         break;
     case 2:
-        gpio_put(led_pin_red, false);
         gpio_put(led_pin_blue, false);
+        gpio_put(led_pin_red, false);
         gpio_put(led_pin_green, true);
         led_atual++;
         add_alarm_in_ms(3000, turn_off_callback, NULL, false);
         break;
     case 3:
-        gpio_put(led_pin_red, false);
         gpio_put(led_pin_blue, false);
+        gpio_put(led_pin_red, false);
         gpio_put(led_pin_green, false);
         led_atual = 1;
         all_led_active = false;
@@ -58,6 +58,10 @@ int main()
     gpio_set_dir(BUTTON_PIN, GPIO_IN);
 
     gpio_pull_up(BUTTON_PIN);
+
+    gpio_put(led_pin_red, false);
+    gpio_put(led_pin_blue, false);
+    gpio_put(led_pin_green, false);
 
     while (true) {
         if (gpio_get(BUTTON_PIN) == 0 && !all_led_active) {
